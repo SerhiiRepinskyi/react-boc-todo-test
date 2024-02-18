@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
 
 import { Layout } from './Layout/Layout'
@@ -13,9 +13,22 @@ interface TodoItem {
 }
 
 function App() {
-  const [todos, setTodos] = useState<
-    { id: string; text: string; completed: boolean }[]
-  >([])
+  const [todos, setTodos] = useState<TodoItem[]>([])
+
+  useEffect(() => {
+    const storedTodos = localStorage.getItem('todos')
+    if (storedTodos) {
+      try {
+        setTodos(JSON.parse(storedTodos))
+      } catch (error) {
+        console.error('Error parsing JSON:', error)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
   const handleSubmit = (todoText: string) => {
     setTodos((prev) => [
