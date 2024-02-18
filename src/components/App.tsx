@@ -6,6 +6,12 @@ import { AppBar } from './AppBar/AppBar'
 import { TodoForm } from './TodoForm/TodoForm'
 import { Todo } from './Todo/Todo'
 
+interface TodoItem {
+  id: string
+  text: string
+  completed: boolean
+}
+
 function App() {
   const [todos, setTodos] = useState<
     { id: string; text: string; completed: boolean }[]
@@ -30,6 +36,15 @@ function App() {
     setTodos((prev) => prev.filter((todo) => todo.id !== id))
   }
 
+  /* to change the text of the todo */
+  const handleEdit = (todoNew: TodoItem) => {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === todoNew.id ? { ...todo, text: todoNew.text } : todo
+      )
+    )
+  }
+
   return (
     <Layout>
       <AppBar></AppBar>
@@ -48,6 +63,7 @@ function App() {
               todoCompleted={todo.completed}
               handleToggle={handleToggle}
               handleDelete={handleDelete}
+              handleEdit={handleEdit}
             />
           </li>
         ))}
