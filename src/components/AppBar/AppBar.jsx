@@ -1,13 +1,11 @@
 export const AppBar = () => {
   return (
-    <header>
-      <section>
-        <h3>Tasks</h3>
-        <div>
-          <p className="">Active: 0</p>
-          <p className="">Completed: 0</p>
-        </div>
-      </section>
-    </header>
+    <div className="mb-2 flex h-24 flex-col justify-center gap-1">
+      <h2 className="font-bold">Tasks</h2>
+      <div className="flex flex-col">
+        <p>Active: 0</p>
+        <p>Completed: 0</p>
+      </div>
+    </div>
   )
 }

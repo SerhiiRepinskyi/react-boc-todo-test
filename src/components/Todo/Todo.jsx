@@ -14,38 +14,42 @@ export const Todo = ({
   const [isEdit, setIsEdit] = useState(false)
 
   return (
-    <div className="">
-      <p>TODO {index}</p>
-
-      <input
-        type="checkbox"
-        className=""
-        checked={todoCompleted}
-        onChange={() => handleToggle(id)}
-      />
-
-      {/* <p className="">{todoText}</p> */}
-
-      {/* to change the text of the todo */}
-      {isEdit ? (
+    <>
+      <div className="flex items-center gap-4">
         <input
-          onBlur={() => {
-            setIsEdit(false)
-            handleEdit({ id, text: newTodoText })
-          }}
-          autoFocus
-          value={newTodoText}
-          onChange={(evt) => setNewTodoText(evt.target.value)}
+          type="checkbox"
+          className="size-6 cursor-pointer"
+          checked={todoCompleted}
+          onChange={() => handleToggle(id)}
         />
-      ) : (
-        <p className="" onClick={() => setIsEdit(true)}>
-          {todoText}
-        </p>
-      )}
 
-      <button className="" type="button" onClick={() => handleDelete(id)}>
-        <MdClose size={24} />
+        <p>{index}</p>
+
+        {/* <p className="">{todoText}</p> */}
+
+        {/* to change the text of the todo */}
+        {isEdit ? (
+          <input
+            onBlur={() => {
+              setIsEdit(false)
+              handleEdit({ id, text: newTodoText })
+            }}
+            autoFocus
+            value={newTodoText}
+            onChange={(evt) => setNewTodoText(evt.target.value)}
+          />
+        ) : (
+          <p onClick={() => setIsEdit(true)}>{todoText}</p>
+        )}
+      </div>
+
+      <button
+        className="hover:bg-gray-300"
+        type="button"
+        onClick={() => handleDelete(id)}
+      >
+        <MdClose size={24} color="#f44336" />
       </button>
-    </div>
+    </>
   )
 }

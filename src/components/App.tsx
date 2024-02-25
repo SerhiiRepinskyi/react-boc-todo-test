@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { nanoid } from 'nanoid'
 
 import { Layout } from './Layout/Layout'
+import { Header } from './Header/Header'
 import { AppBar } from './AppBar/AppBar'
 import { TodoForm } from './TodoForm/TodoForm'
 import { Todo } from './Todo/Todo'
@@ -12,14 +13,14 @@ interface TodoItem {
   completed: boolean
 }
 
-function App() {
+export const App = () => {
   const [todos, setTodos] = useState<TodoItem[]>([])
 
   useEffect(() => {
-    const storedTodos = localStorage.getItem('todos')
-    if (storedTodos) {
+    const currentTodos = localStorage.getItem('todos')
+    if (currentTodos) {
       try {
-        setTodos(JSON.parse(storedTodos))
+        setTodos(JSON.parse(currentTodos))
       } catch (error) {
         console.error('Error parsing JSON:', error)
       }
@@ -39,8 +40,8 @@ function App() {
 
   const handleToggle = (id: string) => {
     setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      prev.map((el) =>
+        el.id === id ? { ...el, completed: !el.completed } : el
       )
     )
   }
@@ -52,37 +53,37 @@ function App() {
   /* to change the text of the todo */
   const handleEdit = (todoNew: TodoItem) => {
     setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === todoNew.id ? { ...todo, text: todoNew.text } : todo
+      prev.map((el) =>
+        el.id === todoNew.id ? { ...el, text: todoNew.text } : el
       )
     )
   }
 
   return (
-    <Layout>
-      <AppBar></AppBar>
-
-      <h2 className="text-2xl font-bold">TO DO</h2>
-
-      <TodoForm onSubmit={handleSubmit} />
-
-      <ul className="">
-        {todos.map((todo, index) => (
-          <li className="" key={todo.id}>
-            <Todo
-              index={index + 1}
-              id={todo.id}
-              todoText={todo.text}
-              todoCompleted={todo.completed}
-              handleToggle={handleToggle}
-              handleDelete={handleDelete}
-              handleEdit={handleEdit}
-            />
-          </li>
-        ))}
-      </ul>
-    </Layout>
+    <>
+      <Header />
+      <Layout>
+        <AppBar />
+        <TodoForm onSubmit={handleSubmit} />
+        <ul className="m-0">
+          {todos.map((el, index) => (
+            <li
+              key={el.id}
+              className="flex flex-row items-center justify-between border-b border-gray-300 py-4"
+            >
+              <Todo
+                index={index + 1}
+                id={el.id}
+                todoText={el.text}
+                todoCompleted={el.completed}
+                handleToggle={handleToggle}
+                handleDelete={handleDelete}
+                handleEdit={handleEdit}
+              />
+            </li>
+          ))}
+        </ul>
+      </Layout>
+    </>
   )
 }
-
-export default App

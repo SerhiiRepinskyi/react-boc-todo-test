@@ -1,3 +1,9 @@
 export const Layout = ({ children }) => {
-  return <main className="">{children}</main>
+  return (
+    <main>
+      <section className="mx-auto my-0 max-w-screen-xl px-4 text-base">
+        {children}
+      </section>
+    </main>
+  )
 }
