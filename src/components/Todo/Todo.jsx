@@ -15,10 +15,10 @@ export const Todo = ({
 
   return (
     <>
-      <div className="flex items-center gap-4">
+      <div className="flex w-full items-center gap-4">
         <input
           type="checkbox"
-          className="size-6 cursor-pointer"
+          className="size-6 shrink-0 cursor-pointer"
           checked={todoCompleted}
           onChange={() => handleToggle(id)}
         />
@@ -30,6 +30,7 @@ export const Todo = ({
         {/* to change the text of the todo */}
         {isEdit ? (
           <input
+            className="w-full px-2"
             onBlur={() => {
               setIsEdit(false)
               handleEdit({ id, text: newTodoText })
@@ -39,7 +40,9 @@ export const Todo = ({
             onChange={(evt) => setNewTodoText(evt.target.value)}
           />
         ) : (
-          <p onClick={() => setIsEdit(true)}>{todoText}</p>
+          <p className="cursor-pointer" onClick={() => setIsEdit(true)}>
+            {todoText}
+          </p>
         )}
       </div>
 
