@@ -32,10 +32,13 @@ export const App = () => {
   }, [todos])
 
   const handleSubmit = (todoText: string) => {
-    setTodos((prev) => [
-      ...prev,
-      { id: nanoid(), text: todoText, completed: false }
-    ])
+    const trimmedText = todoText.trim()
+    if (trimmedText) {
+      setTodos((prev) => [
+        ...prev,
+        { id: nanoid(), text: trimmedText, completed: false }
+      ])
+    }
   }
 
   const handleToggle = (id: string) => {
@@ -52,18 +55,21 @@ export const App = () => {
 
   /* to change the text of the todo */
   const handleEdit = (todoNew: TodoItem) => {
-    setTodos((prev) =>
-      prev.map((el) =>
-        el.id === todoNew.id ? { ...el, text: todoNew.text } : el
+    const trimmedText = todoNew.text.trim()
+    if (trimmedText) {
+      setTodos((prev) =>
+        prev.map((el) =>
+          el.id === todoNew.id ? { ...el, text: trimmedText } : el
+        )
       )
-    )
+    }
   }
 
   return (
     <>
       <Header />
       <Layout>
-        <AppBar />
+        <AppBar todos={todos} />
         <TodoForm onSubmit={handleSubmit} />
         <ul className="m-0">
           {todos.map((el, index) => (
